@@ -7,7 +7,7 @@ defmodule PingPongElixir.Auth.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :photo, :string
-    field :rating, :integer
+    field :rating, :integer, default: 1000
 
     timestamps()
   end
