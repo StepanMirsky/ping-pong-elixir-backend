@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :ping_pong_elixir, PingPongElixir.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "pingpong",
+  password: "pingpong",
   database: "ping_pong_elixir_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
@@ -16,3 +16,5 @@ config :ping_pong_elixir, PingPongElixirWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :bcrypt_elixir, :log_rounds, 4

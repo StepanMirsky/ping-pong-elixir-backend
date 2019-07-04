@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :ping_pong_elixir,
-  ecto_repos: [PingPongElixir.Repo]
+  ecto_repos: [PingPongElixir.Repo],
+  debug_error: false
 
 # Configures the endpoint
 config :ping_pong_elixir, PingPongElixirWeb.Endpoint,
