@@ -7,22 +7,18 @@ defmodule PingPongElixirWeb.UserControllerTest do
 
   @create_attrs %{
     login: "some login",
-    is_active: true,
     password: "some password"
   }
   @update_attrs %{
     login: "some updated login",
-    is_active: false,
     password: "some updated password"
   }
   @invalid_attrs %{
     login: nil,
-    is_active: nil,
     password: nil
   }
   @current_user_attrs %{
     login: "some current user login",
-    is_active: true,
     password: "some current user password"
   }
 
@@ -48,8 +44,7 @@ defmodule PingPongElixirWeb.UserControllerTest do
       assert json_response(conn, 200)["data"] == [
                %{
                  "id" => current_user.id,
-                 "login" => current_user.login,
-                 "is_active" => current_user.is_active
+                 "login" => current_user.login
                }
              ]
     end
@@ -64,8 +59,7 @@ defmodule PingPongElixirWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "login" => "some login",
-               "is_active" => true
+               "login" => "some login"
              } = json_response(conn, 200)["data"]
     end
 
@@ -86,8 +80,7 @@ defmodule PingPongElixirWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "login" => "some updated login",
-               "is_active" => false
+               "login" => "some updated login"
              } = json_response(conn, 200)["data"]
     end
 

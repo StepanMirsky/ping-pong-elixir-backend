@@ -12,8 +12,7 @@ defmodule PingPongElixirWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      login: user.login,
-      is_active: user.is_active}
+      login: user.login}
   end
 
   def render("sign_in.json", %{user: user}) do

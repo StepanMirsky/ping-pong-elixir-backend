@@ -4,9 +4,10 @@ defmodule PingPongElixir.Auth.User do
 
   schema "users" do
     field :login, :string
-    field :is_active, :boolean, default: false
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :photo, :string
+    field :rating, :integer
 
     timestamps()
   end
@@ -14,8 +15,8 @@ defmodule PingPongElixir.Auth.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:login, :is_active, :password])
-    |> validate_required([:login, :is_active, :password])
+    |> cast(attrs, [:login, :password])
+    |> validate_required([:login, :password])
     |> unique_constraint(:login)
     |> put_pass_hash()
   end
