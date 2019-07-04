@@ -17,7 +17,7 @@ defmodule PingPongElixirWeb.Router do
   end
 
   scope "/api", PingPongElixirWeb do
-    pipe_through :api_auth
+    pipe_through [:api, :api_auth]
     resources "/users", UserController, except: [:new, :edit]
   end
 
