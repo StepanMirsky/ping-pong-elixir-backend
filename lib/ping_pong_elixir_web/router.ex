@@ -9,5 +9,6 @@ defmodule PingPongElixirWeb.Router do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
     post "/users/sign_in", UserController, :sign_in
+    resources "/games", GameController, except: [:new, :edit]
   end
 end
