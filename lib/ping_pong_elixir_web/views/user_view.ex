@@ -21,7 +21,7 @@ defmodule PingPongElixirWeb.UserView do
       data: %{
         user: %{
           id: user.id,
-          email: user.email
+          login: user.login
         }
       }
     }

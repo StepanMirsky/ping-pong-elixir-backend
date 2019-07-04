@@ -41,17 +41,19 @@ defmodule PingPongElixirWeb.UserController do
     end
   end
 
-  def sign_in(conn, %{"email" => email, "password" => password}) do
-    case PingPongElixir.Auth.authenticate_user(email, password) do
+  def sign_in(conn, %{"login" => login, "password" => password}) do
+    case PingPongElixir.Auth.authenticate_user(login, password) do
       {:ok, user} ->
         conn
+        |> put_session(:current_user_id, user.id)
         |> put_status(:ok)
         |> render(PingPongElixirWeb.UserView, "sign_in.json", user: user)
 
       {:error, message} ->
         conn
+        |> delete_session(:current_user_id)
         |> put_status(:unauthorized)
         |> render(PingPongElixirWeb.ErrorView, "401.json", message: message)
-      end
     end
+  end
 end
