@@ -5,13 +5,13 @@ defmodule PingPongElixirWeb.UserControllerTest do
   alias PingPongElixir.Auth.User
 
   @create_attrs %{
-    is_active: true,
     login: "some login",
+    is_active: true,
     password: "some password"
   }
   @update_attrs %{
-    is_active: false,
     login: "some updated login",
+    is_active: false,
     password: "some updated password"
   }
   @invalid_attrs %{is_active: nil, login: nil, password: nil}
@@ -41,9 +41,8 @@ defmodule PingPongElixirWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "is_active" => true,
                "login" => "some login",
-               "password" => "some password"
+               "is_active" => true,
              } = json_response(conn, 200)["data"]
     end
 
@@ -64,9 +63,8 @@ defmodule PingPongElixirWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "is_active" => false,
                "login" => "some updated login",
-               "password" => "some updated password"
+               "is_active" => false
              } = json_response(conn, 200)["data"]
     end
 

@@ -6,9 +6,9 @@ defmodule PingPongElixir.AuthTest do
   describe "users" do
     alias PingPongElixir.Auth.User
 
-    @valid_attrs %{is_active: true, login: "some login"}
-    @update_attrs %{is_active: false, login: "some updated login"}
-    @invalid_attrs %{is_active: nil, login: nil}
+    @valid_attrs %{login: "some login", is_active: true, password: "some password"}
+    @update_attrs %{login: "some updated login", is_active: false, password: "some updated password"}
+    @invalid_attrs %{login: nil, is_active: nil, password: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -21,19 +21,18 @@ defmodule PingPongElixir.AuthTest do
 
     test "list_users/0 returns all users" do
       user = user_fixture()
-      assert Auth.list_users() == [%User{ user | password: nil}]
+      assert Auth.list_users() == [user]
     end
 
     test "get_user!/1 returns the user with given id" do
       user = user_fixture()
-      assert Auth.get_user!(user.id) == %User{user | password: nil}
+      assert Auth.get_user!(user.id) == user
     end
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Auth.create_user(@valid_attrs)
       assert user.is_active == true
       assert user.login == "some login"
-      assert Bcrypt.verify_pass("some password", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -45,14 +44,12 @@ defmodule PingPongElixir.AuthTest do
       assert {:ok, %User{} = user} = Auth.update_user(user, @update_attrs)
       assert user.is_active == false
       assert user.login == "some updated login"
-      assert Bcrypt.verify_pass("some updated password", user.password_hash)
     end
 
     test "update_user/2 with invalid data returns error changeset" do
       user = user_fixture()
       assert {:error, %Ecto.Changeset{}} = Auth.update_user(user, @invalid_attrs)
-      assert %User{user | password: nil} == Auth.get_user!(user.id)
-      assert Bcrypt.verify_pass("some password", user.password_hash)
+      assert user == Auth.get_user!(user.id)
     end
 
     test "delete_user/1 deletes the user" do
