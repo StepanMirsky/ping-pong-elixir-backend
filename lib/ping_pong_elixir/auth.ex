@@ -101,9 +101,9 @@ defmodule PingPongElixir.Auth do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
-  
+
   def authenticate_user(login, password) do
-    query = from(u in User, where: u.email == ^email)
+    query = from(u in User, where: u.login == ^login)
     query
     |> Repo.one()
     |> verify_password(password)
