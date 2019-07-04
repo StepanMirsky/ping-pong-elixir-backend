@@ -66,4 +66,75 @@ defmodule PingPongElixir.AuthTest do
       assert %Ecto.Changeset{} = Auth.change_user(user)
     end
   end
+
+  describe "games" do
+    alias PingPongElixir.Auth.Game
+
+    @valid_attrs %{away_approved: true, away_score: 42, away_user: 42, home_approved: true, home_score: 42, home_user: 42, winner: 42}
+    @update_attrs %{away_approved: false, away_score: 43, away_user: 43, home_approved: false, home_score: 43, home_user: 43, winner: 43}
+    @invalid_attrs %{away_approved: nil, away_score: nil, away_user: nil, home_approved: nil, home_score: nil, home_user: nil, winner: nil}
+
+    def game_fixture(attrs \\ %{}) do
+      {:ok, game} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Auth.create_game()
+
+      game
+    end
+
+    test "list_games/0 returns all games" do
+      game = game_fixture()
+      assert Auth.list_games() == [game]
+    end
+
+    test "get_game!/1 returns the game with given id" do
+      game = game_fixture()
+      assert Auth.get_game!(game.id) == game
+    end
+
+    test "create_game/1 with valid data creates a game" do
+      assert {:ok, %Game{} = game} = Auth.create_game(@valid_attrs)
+      assert game.away_approved == true
+      assert game.away_score == 42
+      assert game.away_user == 42
+      assert game.home_approved == true
+      assert game.home_score == 42
+      assert game.home_user == 42
+      assert game.winner == 42
+    end
+
+    test "create_game/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Auth.create_game(@invalid_attrs)
+    end
+
+    test "update_game/2 with valid data updates the game" do
+      game = game_fixture()
+      assert {:ok, %Game{} = game} = Auth.update_game(game, @update_attrs)
+      assert game.away_approved == false
+      assert game.away_score == 43
+      assert game.away_user == 43
+      assert game.home_approved == false
+      assert game.home_score == 43
+      assert game.home_user == 43
+      assert game.winner == 43
+    end
+
+    test "update_game/2 with invalid data returns error changeset" do
+      game = game_fixture()
+      assert {:error, %Ecto.Changeset{}} = Auth.update_game(game, @invalid_attrs)
+      assert game == Auth.get_game!(game.id)
+    end
+
+    test "delete_game/1 deletes the game" do
+      game = game_fixture()
+      assert {:ok, %Game{}} = Auth.delete_game(game)
+      assert_raise Ecto.NoResultsError, fn -> Auth.get_game!(game.id) end
+    end
+
+    test "change_game/1 returns a game changeset" do
+      game = game_fixture()
+      assert %Ecto.Changeset{} = Auth.change_game(game)
+    end
+  end
 end
