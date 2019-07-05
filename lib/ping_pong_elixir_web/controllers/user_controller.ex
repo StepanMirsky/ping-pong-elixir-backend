@@ -47,7 +47,7 @@ defmodule PingPongElixirWeb.UserController do
         conn
         |> put_session(:current_user_id, user.id)
         |> put_status(:ok)
-        |> render(PingPongElixirWeb.UserView, "sign_in.json", user: user)
+        |> render(PingPongElixirWeb.UserView, "user.json", user: user)
 
       {:error, message} ->
         conn
@@ -64,7 +64,7 @@ defmodule PingPongElixirWeb.UserController do
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> put_session(:current_user_id, user.id)
       |> put_status(:ok)
-      |> render("show.json", user: user)
+      |> render(PingPongElixirWeb.UserView, "user.json", user: user)
     end
   end
 
