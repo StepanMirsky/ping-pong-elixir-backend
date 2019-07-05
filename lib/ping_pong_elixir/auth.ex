@@ -160,7 +160,12 @@ defmodule PingPongElixir.Auth do
       ** (Ecto.NoResultsError)
 
   """
-  def get_game!(id), do: Repo.get!(Game, id)
+  def get_game!(id) do
+    Repo.get!(Game, id)
+    |> Repo.preload(:home_user)
+    |> Repo.preload(:away_user)
+    |> Repo.preload(:winner)
+  end
 
   @doc """
   Creates a game.
@@ -176,6 +181,9 @@ defmodule PingPongElixir.Auth do
   """
   def create_game(attrs \\ %{}) do
     %Game{}
+    # |> Repo.preload(:home_user)
+    # |> Repo.preload(:away_user)
+    # |> Repo.preload(:winner)
     |> Game.create_game_changeset(attrs)
     |> Repo.insert()
   end

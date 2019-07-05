@@ -41,12 +41,13 @@ defmodule PingPongElixirWeb.GameController do
     end
   end
 
-  def create_game(conn, %{"home_user_name" => home_user_name, "away_user_name" => away_user_name}) do
-    home_user = Auth.get_user_by_login(home_user_name)
+  def create_game(conn, %{"away_user_name" => away_user_name}) do
+    current_user_id = get_session(conn, :current_user_id)
     away_user = Auth.get_user_by_login(away_user_name)
 
-    with {:ok, %Game{} = game} <- Auth.create_game(%{"away_user_id" => away_user.id, "home_user_id" => home_user.id}) do
-      render(conn, "show.json", game: game)
+    with {:ok, %Game{} = game} <- Auth.create_game(%{"away_user_id" => away_user.id, "home_user_id" => current_user_id}) do
+      new_game = Auth.get_game!(game.id)
+      render(conn, "show.json", game: new_game)
     end
   end
 end
