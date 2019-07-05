@@ -65,4 +65,12 @@ defmodule PingPongElixirWeb.UserController do
       |> render("show.json", user: user)
     end
   end
+
+  def get_current_user(conn, _params) do
+    current_user_id = get_session(conn, :current_user_id)
+    current_user = Auth.get_user!(current_user_id)
+
+    conn
+    |> render("show.json", user: current_user)
+  end
 end
