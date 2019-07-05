@@ -109,6 +109,12 @@ defmodule PingPongElixir.Auth do
     |> verify_password(password)
   end
 
+  def get_user_by_login(login) do
+    query = from(u in User, where: u.login == ^login)
+    query
+    |> Repo.one()
+  end
+
   defp verify_password(nil, _) do
     Bcrypt.no_user_verify()
     {:error, "Wrong login or password"}
@@ -167,7 +173,7 @@ defmodule PingPongElixir.Auth do
   """
   def create_game(attrs \\ %{}) do
     %Game{}
-    |> Game.changeset(attrs)
+    |> Game.create_game_changeset(attrs)
     |> Repo.insert()
   end
 

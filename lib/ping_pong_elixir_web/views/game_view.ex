@@ -12,9 +12,9 @@ defmodule PingPongElixirWeb.GameView do
 
   def render("game.json", %{game: game}) do
     %{id: game.id,
-      home_user: game.home_user,
-      away_user: game.away_user,
-      winner: game.winner,
+      # home_user: game.home_user,
+      # away_user: game.away_user,
+      # winner: game.winner,
       home_approved: game.home_approved,
       away_approved: game.away_approved,
       home_score: game.home_score,

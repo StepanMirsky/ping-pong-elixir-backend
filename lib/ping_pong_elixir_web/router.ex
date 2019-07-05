@@ -20,6 +20,7 @@ defmodule PingPongElixirWeb.Router do
   scope "/api", PingPongElixirWeb do
     pipe_through [:api, :api_auth]
     resources "/users", UserController, except: [:new, :edit]
+    post "/games/create", GameController, :create_game
   end
 
   defp ensure_authenticated(conn, _opts) do
