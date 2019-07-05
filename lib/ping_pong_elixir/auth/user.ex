@@ -23,6 +23,12 @@ defmodule PingPongElixir.Auth.User do
     |> put_pass_hash()
   end
 
+  def update_rating(user, attrs) do
+    user
+    |> cast(attrs, [:rating])
+    |> validate_required([:rating])
+  end
+
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
     %{password: password}} = changeset) do
       change(changeset, Bcrypt.add_hash(password))

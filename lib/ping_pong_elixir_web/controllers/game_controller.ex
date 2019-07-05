@@ -37,6 +37,29 @@ defmodule PingPongElixirWeb.GameController do
     game = Auth.get_game!(id)
     attrs = %{"away_score" => away_score, "home_score" => home_score, "is_finished" => :true}
 
+    away_user = Auth.get_user!(game.away_user.id)
+    home_user = Auth.get_user!(game.home_user.id)
+
+    if home_score > away_score do
+      home_user_rating = home_user.rating + 10
+      away_user_rating = away_user.rating - 5
+
+      home_attr = %{"rating" => home_user_rating}
+      away_attr = %{"rating" => away_user_rating}
+
+      Auth.update_rating(home_user, home_attr)
+      Auth.update_rating(away_user, away_attr)
+    else
+      home_user_rating = home_user.rating - 5
+      away_user_rating = away_user.rating + 10
+
+      home_attr = %{"rating" => home_user_rating}
+      away_attr = %{"rating" => away_user_rating}
+
+      Auth.update_rating(home_user, home_attr)
+      Auth.update_rating(away_user, away_attr)
+    end
+
     with {:ok, %Game{} = game} <- Auth.update_score(game, attrs) do
       render(conn, "show.json", game: game)
     end

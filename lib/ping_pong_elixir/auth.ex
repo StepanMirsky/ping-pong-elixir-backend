@@ -73,6 +73,12 @@ defmodule PingPongElixir.Auth do
     |> Repo.update()
   end
 
+  def update_rating(%User{} = user, attrs) do
+    user
+    |> User.update_rating(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a User.
 
