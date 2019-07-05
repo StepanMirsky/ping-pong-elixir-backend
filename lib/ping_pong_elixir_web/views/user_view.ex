@@ -3,7 +3,7 @@ defmodule PingPongElixirWeb.UserView do
   alias PingPongElixirWeb.UserView
 
   def render("index.json", %{users: users}) do
-    %{data: render_many(users, UserView, "user.json")}
+    render_many(users, UserView, "user.json")
   end
 
   def render("show.json", %{user: user}) do

@@ -16,20 +16,22 @@ defmodule PingPongElixirWeb.UserController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> render(PingPongElixirWeb.UserView, "user.json", user: user)
     end
   end
 
   def show(conn, %{"id" => id}) do
     user = Auth.get_user!(id)
-    render(conn, "show.json", user: user)
+    conn
+    |> render(PingPongElixirWeb.UserView, "user.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Auth.get_user!(id)
 
     with {:ok, %User{} = user} <- Auth.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+      conn
+      |> render(PingPongElixirWeb.UserView, "user.json", user: user)
     end
   end
 
@@ -47,7 +49,7 @@ defmodule PingPongElixirWeb.UserController do
         conn
         |> put_session(:current_user_id, user.id)
         |> put_status(:ok)
-        |> render(PingPongElixirWeb.UserView, "sign_in.json", user: user)
+        |> render(PingPongElixirWeb.UserView, "user.json", user: user)
 
       {:error, message} ->
         conn
@@ -62,7 +64,9 @@ defmodule PingPongElixirWeb.UserController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> put_session(:current_user_id, user.id)
+      |> put_status(:ok)
+      |> render(PingPongElixirWeb.UserView, "user.json", user: user)
     end
   end
 
@@ -71,7 +75,7 @@ defmodule PingPongElixirWeb.UserController do
     current_user = Auth.get_user!(current_user_id)
 
     conn
-    |> render("show.json", user: current_user)
+    |> render(PingPongElixirWeb.UserView, "user.json", user: current_user)
   end
 
   def approve(conn, %{"game_id" => game_id, "approved" => approved}) do

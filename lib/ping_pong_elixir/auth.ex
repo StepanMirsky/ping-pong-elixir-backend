@@ -181,9 +181,6 @@ defmodule PingPongElixir.Auth do
   """
   def create_game(attrs \\ %{}) do
     %Game{}
-    # |> Repo.preload(:home_user)
-    # |> Repo.preload(:away_user)
-    # |> Repo.preload(:winner)
     |> Game.create_game_changeset(attrs)
     |> Repo.insert()
   end
