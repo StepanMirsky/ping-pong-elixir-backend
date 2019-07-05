@@ -143,7 +143,6 @@ defmodule PingPongElixir.Auth do
     Repo.all(Game)
     |> Repo.preload(:home_user)
     |> Repo.preload(:away_user)
-    |> Repo.preload(:winner)
   end
 
   @doc """
@@ -164,7 +163,6 @@ defmodule PingPongElixir.Auth do
     Repo.get!(Game, id)
     |> Repo.preload(:home_user)
     |> Repo.preload(:away_user)
-    |> Repo.preload(:winner)
   end
 
   @doc """

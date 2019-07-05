@@ -9,9 +9,9 @@ defmodule PingPongElixir.Auth.Game do
     field :home_approved, :boolean, default: false
     field :home_score, :integer, default: 0
     belongs_to :home_user, PingPongElixir.Auth.User, foreign_key: :home_user_id
-    belongs_to :winner, PingPongElixir.Auth.User, foreign_key: :winner_id
     field :date_created, :utc_datetime_usec
     field :handicaped, :boolean
+    field :is_finished, :boolean, default: false
 
     timestamps()
   end
@@ -19,8 +19,8 @@ defmodule PingPongElixir.Auth.Game do
   @doc false
   def changeset(game, attrs) do
     game
-    |> cast(attrs, [:home_user, :away_user, :winner, :home_approved, :away_approved, :home_score, :away_score, :date_created, :handicaped])
-    |> validate_required([:home_user, :away_user, :winner, :home_approved, :away_approved, :home_score, :away_score, :date_created, :handicaped])
+    |> cast(attrs, [:home_user, :away_user, :home_approved, :away_approved, :home_score, :away_score, :date_created, :handicaped, :is_finished])
+    |> validate_required([:home_user, :away_user, :home_approved, :away_approved, :home_score, :away_score, :date_created, :handicaped, :is_finished])
   end
 
   def create_game_changeset(game, attrs) do
