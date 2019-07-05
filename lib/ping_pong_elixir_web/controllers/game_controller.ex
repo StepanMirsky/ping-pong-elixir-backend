@@ -41,8 +41,8 @@ defmodule PingPongElixirWeb.GameController do
     home_user = Auth.get_user!(game.home_user.id)
 
     if home_score > away_score do
-      home_user_rating = home_user.rating + 10
-      away_user_rating = away_user.rating - 5
+      home_user_rating = home_user.rating + (100 - (home_user.rating - away_user.rating))/10
+      away_user_rating = away_user.rating - (100 - (home_user.rating - away_user.rating))/20
 
       home_attr = %{"rating" => home_user_rating}
       away_attr = %{"rating" => away_user_rating}
@@ -50,8 +50,8 @@ defmodule PingPongElixirWeb.GameController do
       Auth.update_rating(home_user, home_attr)
       Auth.update_rating(away_user, away_attr)
     else
-      home_user_rating = home_user.rating - 5
-      away_user_rating = away_user.rating + 10
+      home_user_rating = home_user.rating - (100 - (away_user.rating - home_user.rating))/20
+      away_user_rating = away_user.rating + (100 - (away_user.rating - home_user.rating))/10
 
       home_attr = %{"rating" => home_user_rating}
       away_attr = %{"rating" => away_user_rating}
