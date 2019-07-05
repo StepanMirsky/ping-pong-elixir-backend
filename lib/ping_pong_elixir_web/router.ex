@@ -19,7 +19,7 @@ defmodule PingPongElixirWeb.Router do
 
   scope "/api", PingPongElixirWeb do
     pipe_through [:api, :api_auth]
-    post "update_score", GameController, :update_score
+    post "/update_score", GameController, :update_score
     get "/users/me", UserController, :get_current_user
     resources "/users", UserController, except: [:new, :edit]
     post "/games/create", GameController, :create_game
