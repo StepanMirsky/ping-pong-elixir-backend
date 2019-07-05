@@ -141,6 +141,9 @@ defmodule PingPongElixir.Auth do
   """
   def list_games do
     Repo.all(Game)
+    |> Repo.preload(:home_user)
+    |> Repo.preload(:away_user)
+    |> Repo.preload(:winner)
   end
 
   @doc """
