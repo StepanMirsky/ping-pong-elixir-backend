@@ -33,6 +33,15 @@ defmodule PingPongElixirWeb.GameController do
     end
   end
 
+  def update_score(conn, %{"id" => id, "away_score" => away_score, "home_score" => home_score}) do
+    game = Auth.get_game!(id)
+    attrs = %{"away_score" => away_score, "home_score" => home_score}
+
+    with {:ok, %Game{} = game} <- Auth.update_score(game, attrs) do
+      render(conn, "show.json", game: game)
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     game = Auth.get_game!(id)
 

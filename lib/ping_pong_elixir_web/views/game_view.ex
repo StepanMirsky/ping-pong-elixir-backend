@@ -19,6 +19,7 @@ defmodule PingPongElixirWeb.GameView do
       away_approved: game.away_approved,
       home_score: game.home_score,
       away_score: game.away_score,
-      date_created: game.date_created}
+      date_created: game.date_created,
+      is_finished: game.is_finished}
   end
 end

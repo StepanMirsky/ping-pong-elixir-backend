@@ -201,6 +201,12 @@ defmodule PingPongElixir.Auth do
     |> Repo.update()
   end
 
+  def update_score(%Game{} = game, attrs) do
+    game
+    |> Game.update_score(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a Game.
 
