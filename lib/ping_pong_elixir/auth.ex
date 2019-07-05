@@ -18,7 +18,8 @@ defmodule PingPongElixir.Auth do
 
   """
   def list_users do
-    Repo.all(User)
+    query = from(u in User, order_by: [desc: u.rating])
+    Repo.all(query)
   end
 
   @doc """
@@ -146,7 +147,9 @@ defmodule PingPongElixir.Auth do
 
   """
   def list_games do
-    Repo.all(Game)
+    query = from(g in Game, order_by: [desc: g.date_created])
+
+    Repo.all(query)
     |> Repo.preload(:home_user)
     |> Repo.preload(:away_user)
   end
