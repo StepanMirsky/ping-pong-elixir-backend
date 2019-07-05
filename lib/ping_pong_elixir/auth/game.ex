@@ -25,8 +25,8 @@ defmodule PingPongElixir.Auth.Game do
 
   def update_score(game, attrs) do
     game
-    |> cast(attrs, [:home_score, :away_score])
-    |> validate_required([:home_score, :away_score])
+    |> cast(attrs, [:home_score, :away_score, :is_finished])
+    |> validate_required([:home_score, :away_score, :is_finished])
   end
 
   def create_game_changeset(game, attrs) do
