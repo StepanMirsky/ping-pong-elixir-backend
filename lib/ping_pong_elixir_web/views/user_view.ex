@@ -1,6 +1,7 @@
 defmodule PingPongElixirWeb.UserView do
   use PingPongElixirWeb, :view
   alias PingPongElixirWeb.UserView
+  alias PingPongElixirWeb.GameView
 
   def render("index.json", %{users: users}) do
     render_many(users, UserView, "user.json")
@@ -25,6 +26,16 @@ defmodule PingPongElixirWeb.UserView do
           login: user.login
         }
       }
+    }
+  end
+
+  def render("current_user.json", %{user: user, games: games}) do
+    %{
+      id: user.id,
+        login: user.login,
+        photo: user.photo,
+        rating: user.rating,
+        games: render_many(games, GameView, "game.json")
     }
   end
 end

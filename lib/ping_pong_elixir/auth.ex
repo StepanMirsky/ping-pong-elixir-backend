@@ -154,6 +154,17 @@ defmodule PingPongElixir.Auth do
     |> Repo.preload(:away_user)
   end
 
+  def list_user_games(id) do
+    query = from(g in Game,
+    where: g.home_user_id == ^id or g.away_user_id == ^id,
+    order_by: [desc: g.date_created]
+    )
+
+    Repo.all(query)
+    |> Repo.preload(:home_user)
+    |> Repo.preload(:away_user)
+  end
+
   @doc """
   Gets a single game.
 

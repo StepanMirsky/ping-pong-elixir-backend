@@ -74,8 +74,12 @@ defmodule PingPongElixirWeb.UserController do
     current_user_id = get_session(conn, :current_user_id)
     current_user = Auth.get_user!(current_user_id)
 
+    current_user_games = Auth.list_user_games(current_user_id)
+
     conn
-    |> render(PingPongElixirWeb.UserView, "user.json", user: current_user)
+    |> render(PingPongElixirWeb.UserView, "current_user.json", user: current_user, games: current_user_games)
+    # conn
+    # |> render(PingPongElixirWeb.UserView, "user.json", user: current_user)
   end
 
   def approve(conn, %{"game_id" => game_id, "approved" => approved}) do
@@ -85,7 +89,7 @@ defmodule PingPongElixirWeb.UserController do
     if game.home_user_id == current_user_id do
       Auth.update_game(game, %{"home_approved" => approved})
     else
-      if game.away_user_id == current_user_id do 
+      if game.away_user_id == current_user_id do
         Auth.update_game(game, %{"away_approved" => approved})
       end
     end
