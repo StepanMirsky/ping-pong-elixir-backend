@@ -7,7 +7,7 @@ defmodule PingPongElixir.Auth.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :photo, :string
-    field :rating, :float, default: 1000
+    field :rating, :float
     has_many :home_users, PingPongElixir.Auth.Game, foreign_key: :home_user_id
     has_many :away_users, PingPongElixir.Auth.Game, foreign_key: :away_user_id
 
@@ -17,7 +17,7 @@ defmodule PingPongElixir.Auth.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:login, :password])
+    |> cast(attrs, [:login, :password, :rating])
     |> validate_required([:login, :password])
     |> unique_constraint(:login)
     |> put_pass_hash()

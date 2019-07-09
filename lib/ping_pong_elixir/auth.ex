@@ -51,8 +51,10 @@ defmodule PingPongElixir.Auth do
 
   """
   def create_user(attrs \\ %{}) do
+    add_default_rating = Map.put(attrs, "rating", 1000.0)
+
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset(add_default_rating)
     |> Repo.insert()
   end
 
