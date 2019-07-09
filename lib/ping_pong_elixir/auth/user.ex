@@ -7,7 +7,7 @@ defmodule PingPongElixir.Auth.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :photo, :string
-    field :rating, :integer, default: 1000
+    field :rating, :float, default: 1000
     has_many :home_users, PingPongElixir.Auth.Game, foreign_key: :home_user_id
     has_many :away_users, PingPongElixir.Auth.Game, foreign_key: :away_user_id
 
