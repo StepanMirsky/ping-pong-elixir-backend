@@ -15,13 +15,13 @@ defmodule PingPongElixirWeb.Router do
     post "/users/sign_in", UserController, :sign_in
     post "/users/registration", UserController, :registration
     resources "/games", GameController, except: [:new]
+    resources "/users", UserController, except: [:new, :edit, :show]
   end
 
   scope "/api", PingPongElixirWeb do
     pipe_through [:api, :api_auth]
     post "/update_score", GameController, :update_score
     get "/users/me", UserController, :get_current_user
-    resources "/users", UserController, except: [:new, :edit]
     post "/games/create", GameController, :create_game
   end
 
